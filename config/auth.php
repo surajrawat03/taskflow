@@ -37,8 +37,12 @@ return [
 
     'guards' => [
         'web' => [
-            'driver' => 'session',
+            'driver' => 'jwt',
             'provider' => 'users',
+        ],
+        'api' => [
+            'driver' => 'jwt', // Use JWT for API auth
+            'provider' => 'users', // Use the 'users' provider (your User model)
         ],
     ],
 
