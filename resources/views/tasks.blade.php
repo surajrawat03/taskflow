@@ -4,5 +4,5 @@
         <p class="mt-1 text-sm text-gray-600">Manage and organize your tasks</p>
     </div>
     
-    @livewire('task-list')
+    @livewire('task-list', ['tasks' => $tasks])
 </x-app-layout>

@@ -70,7 +70,7 @@
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-700">Full name</label>
                         <div class="mt-1">
-                            <input id="name" name="name" type="text" autocomplete="name" required value="{{ old('name') }}" class="block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="John Doe">
+                            <input id="name" name="name" type="text" autocomplete="name" required value="{{ old('name') }}" class="block w-full py-2 px-4 rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="John Doe">
                         </div>
                         @error('name')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -80,7 +80,7 @@
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
                         <div class="mt-1">
-                            <input id="email" name="email" type="email" autocomplete="email" required value="{{ old('email') }}" class="block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="you@example.com">
+                            <input id="email" name="email" type="email" autocomplete="email" required value="{{ old('email') }}" class="block w-full py-2 px-4 rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="you@example.com">
                         </div>
                         @error('email')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -90,7 +90,7 @@
                     <div>
                         <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                         <div class="mt-1">
-                            <input id="password" name="password" type="password" autocomplete="new-password" required class="block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="••••••••">
+                            <input id="password" name="password" type="password" autocomplete="new-password" required class="block w-full py-2 px-4 rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="••••••••">
                         </div>
                         @error('password')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -100,12 +100,12 @@
                     <div>
                         <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirm password</label>
                         <div class="mt-1">
-                            <input id="password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" required class="block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="••••••••">
+                            <input id="password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" required class="block w-full py-2 px-4 rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="••••••••">
                         </div>
                     </div>
 
                     <div class="flex items-center">
-                        <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                        <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border border-gray-300 rounded">
                         <label for="terms" class="ml-2 block text-sm text-gray-900">
                             I agree to the 
                             <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Terms of Service</a>
