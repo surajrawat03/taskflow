@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 
 /*
@@ -32,9 +34,8 @@ Route::get('/register', function () {
 Route::post('/register', [AuthController::class, 'register']);
 
 Route::middleware('jwt.web')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/tasks', [TaskController::class, 'index'])->name('tasks');
+    Route::resource('tasks', TaskController::class);
+    Route::resource('projects', ProjectController::class);
 });

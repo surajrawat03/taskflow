@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Models\Project;
+use App\Models\Task;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -51,5 +53,30 @@ class User extends Authenticatable implements JWTSubject
     // Return custom claims (extra data to include in the token)
     public function getJWTCustomClaims() {
         return []; // You can add roles, permissions, etc.
+    }
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class)->withCount(['tasks', 'tasks as completed_tasks_count' => function ($query) {
+                $query->where('is_completed', true);
+            }]);
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'assigned_to', 'id');
+    }
+
+    public function createdTasks()
+    {
+        return $this->hasMany(Task::class, 'created_by', 'id');
+    }
+
+    public function recentCreatedTasks()
+    {
+        return $this->hasMany(Task::class, 'created_by', 'id')
+                ->with('projects')
+                ->latest()  // ORDER BY created_at DESC
+                ->limit(5); // LIMIT 5
     }
 }

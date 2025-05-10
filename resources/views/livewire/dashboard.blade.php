@@ -19,7 +19,7 @@
                                 </dt>
                                 <dd>
                                     <div class="text-lg font-medium text-gray-900">
-                                        {{-- {{ $totalTasks }} --}}
+                                        {{ $totalTasks }}
                                     </div>
                                 </dd>
                             </dl>

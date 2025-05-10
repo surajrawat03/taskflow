@@ -15,24 +15,10 @@
                 <option value="completed">Completed</option>
                 <option value="pending">Pending</option>
             </select>
-            
-            <div class="flex items-center">
-                <input type="checkbox" wire:model="showCompleted" id="showCompleted" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                <label for="showCompleted" class="ml-2 block text-sm text-gray-900">
-                    Show completed tasks
-                </label>
-            </div>
         </div>
-        
-        <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-            </svg>
-            New Task
-        </button>
     </div>
     
-    <div class="bg-white shadow overflow-hidden sm:rounded-md">
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
         <ul class="divide-y divide-gray-200">
             @forelse ($tasks as $task)
                 <li class="px-4 py-4 sm:px-6 hover:bg-gray-50 transition duration-150 ease-in-out">
@@ -61,18 +47,18 @@
                                     </div>
                                 @endif
                                 <div class="mt-1 flex items-center text-xs text-gray-500">
-                                    @if ($task->project)
-                                        <span class="px-2 py-1 rounded-full bg-indigo-100 text-indigo-800 mr-2">
-                                            {{ $task->project->name }}
-                                        </span>
-                                    @endif
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
+                                        {{ $task->priority === 'high' ? 'bg-red-100 text-red-800' : 
+                                           ($task->priority === 'medium' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800') }}">
+                                        {{ ucfirst($task->priority) }}
+                                    </span>
                                     
                                     @if ($task->due_date)
-                                        <span class="flex items-center {{ $task->is_due_soon ? 'text-red-500' : '' }}">
+                                        <span class="ml-2 flex items-center {{ $task->is_due_soon ? 'text-red-500' : '' }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                             </svg>
-                                            {{ $task->due_date->format('M d, Y') }}
+                                            {{ \Carbon\Carbon::parse($task->due_date)->format('M d, Y') }}
                                         </span>
                                     @endif
                                 </div>
@@ -102,7 +88,7 @@
                         Get started by creating a new task.
                     </p>
                     <div class="mt-6">
-                        <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <button type="button" id="empty-new-task-button" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             <svg xmlns="http://www.w3.org/2000/svg" class="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                             </svg>
@@ -112,10 +98,21 @@
                 </li>
             @endforelse
         </ul>
-        {{-- @if ($tasks->hasPages()) --}}
+        @if($tasks->hasPages())
             <div class="px-4 py-3 border-t border-gray-200 sm:px-6">
-                {{-- {{ $tasks->links() }} --}}
+                {{ $tasks->onEachSide(0)->links() }}
             </div>
-        {{-- @endif --}}
+        @endif
     </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const emptyNewTaskButton = document.getElementById('empty-new-task-button');
+            if (emptyNewTaskButton) {
+                emptyNewTaskButton.addEventListener('click', function() {
+                    document.getElementById('task-modal').classList.remove('hidden');
+                });
+            }
+        });
+    </script>
 </div>
