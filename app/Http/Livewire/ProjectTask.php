@@ -44,7 +44,7 @@ class ProjectTask extends Component
     {
         $task = Task::find($taskId);
         if ($task && $task->project_id == $this->projectId) {
-            // $task->is_completed = !$task->is_completed;
+            $task->is_completed = !$task->is_completed;
             $task->save();
         }
     }

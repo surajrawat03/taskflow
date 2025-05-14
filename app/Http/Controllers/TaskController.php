@@ -15,7 +15,8 @@ class TaskController extends Controller
     public function index()
     {
         $tasks = auth()->user()->recentCreatedTasks;
-       return view('tasks', compact('tasks'));
+        $projects = auth()->user()->projects;
+       return view('tasks', compact('tasks', 'projects'));
     }
 
     /**
