@@ -12,8 +12,11 @@
             
             <select wire:model="status" class="border border-gray-300 rounded-md py-2 pl-3 pr-10 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                 <option value="">All Status</option>
-                <option value="completed">Completed</option>
-                <option value="pending">Pending</option>
+                @foreach ($statuses as $key => $value)
+                    <option value="{{ $key }}">{{ $value }}</option>
+                @endforeach
+                {{-- <option value="completed">Completed</option>
+                <option value="pending">Pending</option> --}}
             </select>
         </div>
     </div>
