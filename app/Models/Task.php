@@ -17,6 +17,7 @@ class Task extends Model
         'due_date',
         'priority',
         'created_by',
+        'status',
         'assigned_to',
         'project_id',
     ];
@@ -25,9 +26,9 @@ class Task extends Model
         'due_date' => 'date',
     ];
 
-    const STATUS_LOW = 'low';
-    const STATUS_MEDIUM = 'medium';
-    const STATUS_HIGH = 'high';
+    const PRIORITIES_LOW = 'low';
+    const PRIORITIES_MEDIUM = 'medium';
+    const PRIORITIES_HIGH = 'high';
     const STATUS_TODO = 'todo';
     const STATUS_IN_PROGRESS = 'in_progress';
     const STATUS_COMPLETED = 'completed';
@@ -35,9 +36,9 @@ class Task extends Model
     public static function priorities()
     {
         return [
-            self::STATUS_LOW => 'Low',
-            self::STATUS_MEDIUM => 'Medium',
-            self::STATUS_HIGH => 'High',
+            self::PRIORITIES_LOW => 'Low',
+            self::PRIORITIES_MEDIUM => 'Medium',
+            self::PRIORITIES_HIGH => 'High',
         ];
     }
 

@@ -24,6 +24,16 @@ class ProjectTask extends Component
         'sortDirection' => ['except' => 'desc'],
     ];
 
+    /**
+     * @param string
+     */
+    public $statuses;
+
+    public function mount()
+    {
+        $this->statuses = Task::statuses();
+    }
+
     public function updatingSearch()
     {
         $this->resetPage();
@@ -44,7 +54,8 @@ class ProjectTask extends Component
     {
         $task = Task::find($taskId);
         if ($task && $task->project_id == $this->projectId) {
-            // $task->is_completed = !$task->is_completed;
+            $task->is_completed = !$task->is_completed;
+            $task->status = !$task->is_completed ? $task::STATUS_IN_PROGRESS : $task::STATUS_COMPLETED;
             $task->save();
         }
     }
@@ -52,23 +63,17 @@ class ProjectTask extends Component
     public function render()
     {
         $query = Task::query()
-        ->where('project_id', $this->projectId)
-        ->when($this->search, function ($query) {
-            return $query->where('title', 'like', '%' . $this->search . '%')
-                ->orWhere('description', 'like', '%' . $this->search . '%');
-        })
-        ->when($this->status, function ($query) {
-            if ($this->status === 'completed') {
-                return $query->where('status', 'completed');
-            } elseif ($this->status === 'pending') {
-                return $query->where('status', 'completed');
-            }
-        })
-        ->orderBy($this->sortField, $this->sortDirection);
+            ->where('project_id', $this->projectId)
+            ->when($this->search, function ($query) {
+                return $query->where('title', 'like', '%' . $this->search . '%')
+                    ->orWhere('description', 'like', '%' . $this->search . '%');
+            })
+            ->when($this->status, function ($query) {
+                return $query->where('status', $this->status);
+            })
+          ->orderBy($this->sortField, $this->sortDirection);
         
         $tasks = $query->paginate(5);
-        return view('livewire.project-task',[
-            'tasks' => $tasks
-        ]);
+        return view('livewire.project-task',compact('tasks'));
     }
 }

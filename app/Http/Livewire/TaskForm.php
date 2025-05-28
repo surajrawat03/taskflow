@@ -40,6 +40,11 @@ class TaskForm extends Component
     public $priority;
 
     /**
+     * @param string
+     */
+    public $status;
+
+    /**
      * @param int
      */
     public $user_id;
@@ -53,7 +58,8 @@ class TaskForm extends Component
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'due_date' => 'required|date',
-            'priority' => 'required|string'
+            'priority' => 'required|string',
+            'status' => 'required|string'
         ]);
 
         $data = [
@@ -61,6 +67,7 @@ class TaskForm extends Component
             'description' => $this->description,
             'due_date' => $this->due_date,
             'priority' => $this->priority,
+            'status' => $this->status,
             'created_by' => $this->created_by,
             'project_id' => $this->project_id
         ];
@@ -91,11 +98,14 @@ class TaskForm extends Component
             $this->emit('taskCreated');
             $this->dispatchBrowserEvent('task-created');
             
-            session()->flash('success', 'Task created successfully.');
+            session('success', 'Task created successfully.');
     }
 
     public function render()
     {
-        return view('livewire.task-form');
+        
+        $priorities = Task::priorities();
+        $statuses = Task::statuses();
+        return view('livewire.task-form', compact('priorities', 'statuses'));
     }
 }
