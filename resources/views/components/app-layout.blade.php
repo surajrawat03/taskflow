@@ -48,8 +48,11 @@
             <main class="flex-1 p-6">
                 {{ $slot ?? '' }}
                 @yield('content')
+                <x-flash-messages />
             </main>
         </div>
+        
+      <!-- Flash Messages Component -->
     </div>
 
     @livewireScripts

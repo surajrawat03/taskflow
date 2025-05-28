@@ -15,12 +15,10 @@
                 @foreach ($statuses as $key => $value)
                     <option value="{{ $key }}">{{ $value }}</option>
                 @endforeach
-                {{-- <option value="completed">Completed</option>
-                <option value="pending">Pending</option> --}}
             </select>
         </div>
     </div>
-    
+
     <div class="bg-white shadow overflow-hidden sm:rounded-lg">
         <ul class="divide-y divide-gray-200">
             @forelse ($tasks as $task)
@@ -29,7 +27,7 @@
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
                                 <button wire:click="toggleTaskStatus({{ $task->id }})" class="flex items-center justify-center h-8 w-8 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                    @if ($task->status == 'completed')
+                                    @if ($task->is_completed)
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
@@ -41,11 +39,11 @@
                                 </button>
                             </div>
                             <div class="ml-4">
-                                <div class="text-sm font-medium text-gray-900 {{ $task->status == 'completed' ? 'line-through text-gray-500' : '' }}">
+                                <div class="text-sm font-medium text-gray-900 {{ $task->is_completed ? 'line-through text-gray-500' : '' }}">
                                     {{ $task->title }}
                                 </div>
                                 @if ($task->description)
-                                    <div class="text-sm text-gray-500 {{ $task->status == 'completed' ? 'line-through' : '' }}">
+                                    <div class="text-sm text-gray-500 {{ $task->is_completed ? 'line-through' : '' }}">
                                         {{ Str::limit($task->description, 100) }}
                                     </div>
                                 @endif
@@ -68,16 +66,20 @@
                             </div>
                         </div>
                         <div class="flex items-center">
-                            <button class="text-gray-400 hover:text-gray-500 focus:outline-none focus:text-gray-500 mr-4">
+                            <a href="{{ route('tasks.edit', $task->id) }}" class="text-gray-400 hover:text-gray-500 focus:outline-none focus:text-gray-500 mr-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                 </svg>
-                            </button>
-                            <button class="text-gray-400 hover:text-gray-500 focus:outline-none focus:text-gray-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                </svg>
-                            </button>
+                            </a>
+                            <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this task?');" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button class="text-gray-400 hover:text-gray-500 focus:outline-none focus:text-gray-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </li>

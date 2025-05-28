@@ -55,6 +55,7 @@ class ProjectTask extends Component
         $task = Task::find($taskId);
         if ($task && $task->project_id == $this->projectId) {
             $task->is_completed = !$task->is_completed;
+            $task->status = !$task->is_completed ? $task::STATUS_IN_PROGRESS : $task::STATUS_COMPLETED;
             $task->save();
         }
     }
@@ -73,8 +74,6 @@ class ProjectTask extends Component
           ->orderBy($this->sortField, $this->sortDirection);
         
         $tasks = $query->paginate(5);
-        return view('livewire.project-task',[
-            'tasks' => $tasks
-        ]);
+        return view('livewire.project-task',compact('tasks'));
     }
 }
