@@ -37,12 +37,12 @@ class TaskForm extends Component
     /**
      * @param string
      */
-    public $priority;
+    public $priority = Task::PRIORITIES_LOW;
 
     /**
      * @param string
      */
-    public $status;
+    public $status = Task::STATUS_TODO;
 
     /**
      * @param int
