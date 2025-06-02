@@ -741,6 +741,9 @@ video {
 .inline-block {
 	display: inline-block;
 }
+.inline {
+	display: inline;
+}
 .flex {
 	display: flex;
 }
@@ -1603,6 +1606,11 @@ video {
 	color: rgba(49, 46, 129, var(--tw-text-opacity));
 }
 
+.hover\:text-red-900:hover {
+	--tw-text-opacity: 1;
+	color: rgba(127, 29, 29, var(--tw-text-opacity));
+}
+
 .hover\:text-red-800:hover {
 	--tw-text-opacity: 1;
 	color: rgba(153, 27, 27, var(--tw-text-opacity));
@@ -1921,7 +1929,7 @@ video {
 
 @media (min-width: 1280px) {
 
-	.xl\:grid-cols-4 {
-		grid-template-columns: repeat(4, minmax(0, 1fr));
+	.xl\:grid-cols-3 {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 	}
 }

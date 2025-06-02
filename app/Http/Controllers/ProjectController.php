@@ -138,11 +138,23 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param Project $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Project $project)
     {
-        //
+        try {
+            $project->delete();
+            $msg = 'Project deleted successfully.';
+            $msgType = 'success';
+        } catch (\Throwable $th) {
+            $msg = 'Something went wrong.';
+            $msgType = 'error';
+        }
+
+        // Refresh jwt tocken.
+        $token = JWTAuth::refresh(JWTAuth::getToken());
+
+        return redirect()->back()->with($msgType, $msg)->withCookie(cookie('jwt', $token, JWTAuth::factory()->getTTL()));
     }
 }

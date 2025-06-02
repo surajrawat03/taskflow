@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="mb-6 flex items-center justify-between">
         <div>
-            <h1 class="text-2xl font-bold">Dashboard</h1>
+            <h1 class="text-2xl font-bold">Projects</h1>
             <p class="mt-1 text-sm text-gray-600">Welcome back to your TaskMaster dashboard</p>
         </div>
         <a href="{{ route('projects.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
@@ -12,7 +12,7 @@
         </a>
     </div>
     
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
         @forelse($projects as $project)
             <a href="{{ route('projects.show', $project->id) }}" class="block">
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200">
@@ -34,7 +34,7 @@
                         </div>
                         
                         @if($project->description)
-                            <p class="mt-2 text-sm text-gray-600 line-clamp-2">{{ $project->description }}</p>
+                            <p class="mt-2 text-sm text-gray-600 line-clamp-2">{{ Str::limit($project->description, 50) }}</p>
                         @endif
                         
                         <div class="mt-4 flex items-center justify-between text-sm">
@@ -65,6 +65,15 @@
                                 @endif
                             </div> --}}
                             <span class="text-indigo-600 font-medium text-sm">View Project</span>
+                             <form action="{{ route('projects.destroy', $project->id) }}" method="POST" onsubmit="return confirmDelete(this);"  style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-400 hover:text-red-500 focus:outline-none focus:text-red-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -136,4 +145,16 @@
             </ul>
         </div>
     </div>
+
+    <script>
+        function confirmDelete(form) {
+            if (confirm('Are you sure you want to delete projects?')) {
+                const button = form.querySelector('button[type="submit"]');
+                button.disabled = true;
+                button.classList.add('opacity-50', 'cursor-not-allowed');
+                return true;
+            }
+            return false; // cancel form submission
+        }
+    </script>
 </x-app-layout>
