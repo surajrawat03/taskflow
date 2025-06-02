@@ -1,4 +1,9 @@
 <div>
+    {{-- Task List Heading --}}
+     <div class="flex items-center mb-2">
+        <h1 class="text-2xl font-bold">Task List</h1>
+    </div>
+    {{-- Task List Filters --}}
     <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div class="flex flex-col md:flex-row gap-4 md:items-center">
             <div class="relative">
@@ -16,9 +21,16 @@
                     <option value="{{ $key }}">{{ $value }}</option>
                 @endforeach
             </select>
+            <button type="button" id="new-task-button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                New Task
+            </button>
         </div>
     </div>
 
+    {{-- Task List --}}
     <div class="bg-white shadow overflow-hidden sm:rounded-lg">
         <ul class="divide-y divide-gray-200">
             @forelse ($tasks as $task)
