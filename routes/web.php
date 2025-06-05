@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TeamController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +39,5 @@ Route::middleware('jwt.web')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::resource('tasks', TaskController::class);
     Route::resource('projects', ProjectController::class);
+    Route::resource('teams', TeamController::class);
 });
