@@ -1,6 +1,6 @@
 <div 
-    x-data="flashMessages()" 
-    x-init="init()"
+    {{-- x-data="flashMessages()" 
+    x-init="init()" --}}
     class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 space-y-2 w-full max-w-lg"
     style="z-index: 9999;"
 >
