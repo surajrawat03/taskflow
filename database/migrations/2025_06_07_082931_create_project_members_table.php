@@ -1,11 +1,10 @@
 <?php
 
-use App\Models\Task;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTasksTable extends Migration
+class CreateProjectMembersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,16 +13,13 @@ class CreateTasksTable extends Migration
      */
     public function up()
     {
-        Schema::create('tasks', function (Blueprint $table) {
+        Schema::create('project_members', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('created_by');
-            $table->foreignId('assigned_to')->nullable();
             $table->foreignId('project_id')->constrained()->onDelete('cascade');
-            $table->string('title');
-            $table->text('description');
-            $table->string('priority')->default(Task::PRIORITIES_LOW);
-            $table->date('due_date')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('role')->default('member');
             $table->timestamps();
+            $table->unique(['project_id', 'user_id']);
         });
     }
 
@@ -34,6 +30,6 @@ class CreateTasksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tasks');
+        Schema::dropIfExists('project_members');
     }
 }

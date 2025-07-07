@@ -92,6 +92,30 @@
                         </div>
                     </div>
                     
+                     <!-- Role Field -->
+                    <div class="mb-4">
+                        <label for="project_id" class="block text-sm font-medium text-gray-700 mb-2">
+                            Project *
+                        </label>
+                        <select id="project_id" 
+                                wire:model.defer="project_id"
+                                class="w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 focus:border-indigo-500 focus:ring-indigo-500">
+                            @foreach ($projects as $project)
+                                <option value="{{$project->id}}">{{$project->name}}</option>
+                            @endforeach
+                        </select>
+                        @error('project_id')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                        
+                        <!-- Role Descriptions -->
+                        {{-- <div class="mt-2 text-xs text-gray-500">
+                            <div x-show="$wire.role === 'member'">Can view and manage assigned tasks</div>
+                            <div x-show="$wire.role === 'manager'">Can manage projects and assign tasks to team members</div>
+                            <div x-show="$wire.role === 'admin'">Full access to all projects and team management</div>
+                        </div> --}}
+                    </div>
+
                     <!-- Message Field -->
                     <div class="mb-6">
                         <label for="message" class="block text-sm font-medium text-gray-700 mb-2">

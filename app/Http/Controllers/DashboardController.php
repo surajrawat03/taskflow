@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Services\DashboardService; 
+use App\Services\DashboardService;
+use App\Mail\InvitationEmail;
+use Illuminate\Support\Facades\Mail; 
 
 class DashboardController extends Controller
 {
@@ -12,6 +14,11 @@ class DashboardController extends Controller
     public function __construct(DashboardService $dashboardService)
     {
         $this->dashboardService = $dashboardService;
+    }
+
+    public function test()
+    {
+           Mail::to('surajrawat321998@gmail.com')->send(new InvitationEmail(1));
     }
 
     public function index()

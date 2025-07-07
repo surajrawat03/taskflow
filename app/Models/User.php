@@ -55,11 +55,18 @@ class User extends Authenticatable implements JWTSubject
         return []; // You can add roles, permissions, etc.
     }
 
+    // public function projects()
+    // {
+    //     return $this->hasMany(Project::class)->withCount(['tasks', 'tasks as completed_tasks_count' => function ($query) {
+    //             $query->where('is_completed', true);
+    //         }]);
+    // }
+
     public function projects()
     {
-        return $this->hasMany(Project::class)->withCount(['tasks', 'tasks as completed_tasks_count' => function ($query) {
-                $query->where('is_completed', true);
-            }]);
+        return $this->belongsToMany(Project::class, 'project_members')
+                ->withPivot('role')
+                ->withTimestamps();
     }
 
     public function tasks()
@@ -79,4 +86,9 @@ class User extends Authenticatable implements JWTSubject
                 ->latest()  // ORDER BY created_at DESC
                 ->limit(5); // LIMIT 5
     }
+
+    public function sentInvitations() {
+        return $this->hasMany(ProjectInvitation::class, 'invited_by');
+    }
+
 }

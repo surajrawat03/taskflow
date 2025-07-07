@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserRegistered;
+use App\Models\ProjectInvitation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
@@ -30,6 +32,13 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        $role = $request->input('role', 'member');
+
+        if ($request->has('invitation_id')) {
+            $projectInvitation = ProjectInvitation::find($request->invitation_id);
+            event(new UserRegistered($user, $role, $projectInvitation));
+        }
 
         $token = JWTAuth::fromUser($user);
 
