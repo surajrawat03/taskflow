@@ -73,32 +73,33 @@ class TaskForm extends Component
         ];
 
         Task::create($data);
-            // Generate a JWT for the authenticated user
-            $token = JWTAuth::refresh(JWTAuth::getToken());
 
-            // Queue a secure, HttpOnly cookie
-            Cookie::queue(
-                Cookie::make(
-                    'jwt',
-                    $token,
-                    JWTAuth::factory()->getTTL(), // minutes
-                    '/',                           // path
-                    null,                          // domain
-                    true,                          // secure
-                    true,                          // httpOnly
-                    false,                         // raw
-                    'Strict'                       // sameSite
-                )
-            );
+        // Generate a JWT for the authenticated user
+        $token = JWTAuth::refresh(JWTAuth::getToken());
+
+        // Queue a secure, HttpOnly cookie
+        Cookie::queue(
+            Cookie::make(
+                'jwt',
+                $token,
+                JWTAuth::factory()->getTTL(), // minutes
+                '/',                           // path
+                null,                          // domain
+                true,                          // secure
+                true,                          // httpOnly
+                false,                         // raw
+                'Strict'                       // sameSite
+            )
+        );
+
+        // Plain redirect — Laravel will include the queued cookie
+        // return $this->redirectRoute('projects.index');
+        $this->reset(['title', 'description', 'due_date', 'priority']);
     
-            // Plain redirect — Laravel will include the queued cookie
-            // return $this->redirectRoute('projects.index');
-            $this->reset(['title', 'description', 'due_date', 'priority']);
+        $this->emit('taskCreated');
+        $this->dispatchBrowserEvent('task-created');
         
-            $this->emit('taskCreated');
-            $this->dispatchBrowserEvent('task-created');
-            
-            session('success', 'Task created successfully.');
+        session('success', 'Task created successfully.');
     }
 
     public function render()

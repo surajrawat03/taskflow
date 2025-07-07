@@ -54,7 +54,10 @@ class ProjectController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        Project::create($validator->validated());
+        $project = Project::create($validator->validated());
+
+        // Add the creator as a project member (role: owner)
+        $project->members()->attach(auth()->id(), ['role' => 'owner']);
 
         // Generate a JWT for the authenticated user
         $token = JWTAuth::refresh(JWTAuth::getToken());

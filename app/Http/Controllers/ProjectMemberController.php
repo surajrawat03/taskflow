@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Team;
+use App\Models\ProjectMember;
 use Illuminate\Http\Request;
 
-class TeamController extends Controller
+class ProjectMemberController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class TeamController extends Controller
      */
     public function index()
     {
-        return view('teams.index');
+        //
     }
 
     /**
@@ -41,10 +41,10 @@ class TeamController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Team  $team
+     * @param  \App\Models\ProjectMember  $projectMember
      * @return \Illuminate\Http\Response
      */
-    public function show(Team $team)
+    public function show(ProjectMember $projectMember)
     {
         //
     }
@@ -52,10 +52,10 @@ class TeamController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Team  $team
+     * @param  \App\Models\ProjectMember  $projectMember
      * @return \Illuminate\Http\Response
      */
-    public function edit(Team $team)
+    public function edit(ProjectMember $projectMember)
     {
         //
     }
@@ -64,10 +64,10 @@ class TeamController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Team  $team
+     * @param  \App\Models\ProjectMember  $projectMember
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Team $team)
+    public function update(Request $request, ProjectMember $projectMember)
     {
         //
     }
@@ -75,10 +75,10 @@ class TeamController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Team  $team
+     * @param  \App\Models\ProjectMember  $projectMember
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Team $team)
+    public function destroy(ProjectMember $projectMember)
     {
         //
     }

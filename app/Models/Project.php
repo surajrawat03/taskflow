@@ -42,4 +42,16 @@ class Project extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+    public function invitations()
+    {
+        return $this->hasMany(ProjectInvitation::class);
+    }
+
+    public function members()
+    {
+        return $this->belongsToMany(User::class, 'project_members')
+            ->withPivot('role')
+            ->withTimestamps();
+    }
 }

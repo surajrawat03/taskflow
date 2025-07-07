@@ -67,6 +67,7 @@
 
                 <form class="space-y-6" action="{{ route('register') }}" method="POST">
                     @csrf
+                    <input type="hidden" name="invitation_id" value="{{ old('invitation_id') }}">
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-700">Full name</label>
                         <div class="mt-1">
