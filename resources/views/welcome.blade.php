@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
     <title>{{ config('app.name', 'TaskMaster') }} - Manage Tasks Efficiently</title>
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +20,7 @@
 </head>
 <body class="font-sans antialiased bg-white">
     <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-10">
+    <header class="bg-white shadow-sm sticky top-0 z-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
@@ -85,32 +85,26 @@
     </header>
     
     <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
-                        Manage Tasks Efficiently with TaskMaster
-                    </h1>
-                    <p class="text-xl md:text-2xl mb-8 text-indigo-100">
-                        The all-in-one task management solution for teams and individuals. Stay organized, meet deadlines, and boost productivity.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="{{ route('register') }}" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-700 focus:ring-white">
-                            Get Started Free
-                        </a>
-                        <a href="#features" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-500 bg-opacity-30 hover:bg-opacity-40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-700 focus:ring-white">
-                            Learn More
-                        </a>
-                    </div>
-                </div>
-                <div class="hidden md:block">
-                    <img src="{{ asset('images/hero-illustration.svg') }}" alt="Task Management Illustration" class="w-full h-auto">
+    <section class="relative w-full h-full bg-cover bg-center text-white" style="background-image: url('{{ asset('storage/images/hero-image.png') }}');">
+         <div class="absolute inset-0 bg-gradient-to-r from-indigo-700/70 to-purple-700/70 z-0"></div>
+            <div class="relative z-10 px-6 md:px-12 py-24 md:py-32 max-w-4xl">
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
+                    Manage Tasks Efficiently with TaskMaster
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 text-indigo-100">
+                    The all-in-one task management solution for teams and individuals. Stay organized, meet deadlines, and boost productivity.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="{{ route('register') }}" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-700 focus:ring-white">
+                        Get Started Free
+                    </a>
+                    <a href="#features" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-500 bg-opacity-30 hover:bg-opacity-40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-700 focus:ring-white">
+                        Learn More
+                    </a>
                 </div>
             </div>
-        </div>
-    </section>
-    
+        </section>
+
     <!-- Features Section -->
     <section id="features" class="py-16 md:py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
