@@ -20,6 +20,7 @@ class Task extends Model
         'status',
         'assigned_to',
         'project_id',
+        'is_completed',
     ];
 
     protected $casts = [

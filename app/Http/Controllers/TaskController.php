@@ -18,7 +18,7 @@ class TaskController extends Controller
     {
         $tasks = auth()->user()->recentCreatedTasks;
         $projects = auth()->user()->projects;
-       return view('tasks', compact('tasks', 'projects'));
+       return view('projects.tasks', compact('tasks', 'projects'));
     }
 
     /**
@@ -62,7 +62,7 @@ class TaskController extends Controller
     public function edit(Task $task)
     {
         $statuses = $task::statuses();
-        return view('tasks.edit', compact('task', 'statuses'));
+        return view('projects.tasks.edit', compact('task', 'statuses'));
     }
 
     /**
@@ -79,8 +79,12 @@ class TaskController extends Controller
             'description' => 'required|string',
             'due_date' => 'required|string',
             'priority' => 'required|string',
-            'status' => 'required|string',
+            'status' => 'required|string'
         ]);
+
+        $data = $validator->validated();
+        // Default to 0 if not present
+        $data['is_completed'] = $request->has('is_completed') ? 1 : 0;
 
         if ($validator->fails()) {
             if ($request->expectsJson()) {
@@ -89,7 +93,7 @@ class TaskController extends Controller
             return response()->back()->withErrors($validator)->withInput();
         }
 
-        $task->update($validator->validated());
+        $task->update($data);
 
         // Refresh jwt tocken.
         $token = JWTAuth::refresh(JWTAuth::getToken());
