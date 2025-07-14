@@ -33,14 +33,13 @@ Route::get('/register', function () {
 })->name('register');
 
 Route::post('/register', [AuthController::class, 'register']);
+Route::get('acceptInvitation/{id}/{email}', [InvitationController::class, 'accept'])->name('accept-invitation')->middleware('signed');
+Route::get('/test', [DashboardController::class, 'test'])->name('test');
 
 Route::middleware('jwt.web')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::resource('tasks', TaskController::class);
-    Route::resource('projects', ProjectController::class);
+    Route::resource('projects',     ProjectController::class);
     Route::resource('invitation', InvitationController::class);
 });
-
-Route::get('acceptInvitation/{id}/{email}', [InvitationController::class, 'accept'])->name('accept-invitation')->middleware('signed');
-Route::get('/test', [DashboardController::class, 'test'])->name('test');

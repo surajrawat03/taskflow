@@ -13,18 +13,18 @@ class AcceptedInvitationEmail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $invitation;
-    public $newMember;
+    public $projectInvitation;
+    public $user;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(ProjectInvitation $invitation, User $newMember)
+    public function __construct(ProjectInvitation $projectInvitation, User $user)
     {
-        $this->invitation = $invitation;
-        $this->newMember = $newMember;
+        $this->projectInvitation = $projectInvitation;
+        $this->user = $user;
     }
 
     /**
@@ -34,14 +34,10 @@ class AcceptedInvitationEmail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        $inviter = $this->invitation->inviter;
-        $project = $this->invitation->project;
-        return $this->subject('Your Invitation Was Accepted!')
-            ->view('emails.accepted-invitation', [
-                'invitation' => $this->invitation,
-                'inviter' => $inviter,
-                'project' => $project,
-                'newMember' => $this->newMember,
-            ]);
+        $invitation = $this->projectInvitation;
+        $acceptedUser = $this->user;
+        $project = $invitation->project;
+        return $this->subject('Invitation Accepted - ' . $project->name)
+            ->view('emails.accepted-invitation', compact('invitation', 'acceptedUser', 'project'));
     }
 } 

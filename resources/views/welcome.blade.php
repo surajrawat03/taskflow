@@ -86,7 +86,7 @@
     
     <!-- Hero Section -->
     <section class="relative w-full h-full bg-cover bg-center text-white" style="background-image: url('{{ asset('storage/images/hero-image.png') }}');">
-         <div class="absolute inset-0 bg-gradient-to-r from-indigo-700/70 to-purple-700/70 z-0"></div>
+         <div class="absolute inset-0 bg-gradient-to-r from-indigo-700/70 z-0"></div>
             <div class="relative z-10 px-6 md:px-12 py-24 md:py-32 max-w-4xl">
                 <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
                     Manage Tasks Efficiently with TaskMaster
