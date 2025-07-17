@@ -71,7 +71,7 @@ class ProjectController extends Controller
         }
 
         return redirect()->route('projects.index')->withCookie(
-            cookie('jwt', $token, JWTAuth::factory()->getTTL())
+            cookie('jwt', $token, JWTAuth::factory()->getTTL(), '/', null, false, false)
         );
     }
 

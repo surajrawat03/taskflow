@@ -51,7 +51,7 @@ class AuthController extends Controller
         }
 
         return redirect()->route('dashboard')->withCookie(
-            cookie('jwt', $token, JWTAuth::factory()->getTTL())
+            cookie('jwt', $token, JWTAuth::factory()->getTTL(), '/', null, false, false)
         );
     }
 
@@ -78,7 +78,7 @@ class AuthController extends Controller
         }
 
         return redirect()->route('dashboard')->withCookie(
-            cookie('jwt', $token, JWTAuth::factory()->getTTL())
+            cookie('jwt', $token, JWTAuth::factory()->getTTL(), '/', null, false, false)
         );
     }
 

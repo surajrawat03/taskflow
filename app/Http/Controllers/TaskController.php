@@ -107,7 +107,7 @@ class TaskController extends Controller
         }
 
         return redirect()->back()->with('success', 'Task updated successfully.')
-            ->withCookie(cookie('jwt', $token, JWTAuth::factory()->getTTL()));
+            ->withCookie(cookie('jwt', $token, JWTAuth::factory()->getTTL(), '/', null, false, false));
         // return redirect()->route('tasks.edit', $task->id)
         //     ->with('success', 'Task updated successfully.')
         //     ->withCookie(cookie('jwt', $token, JWTAuth::factory()->getTTL())); 
@@ -134,6 +134,6 @@ class TaskController extends Controller
         $token = JWTAuth::refresh(JWTAuth::getToken());
 
         return redirect()->back()->with($messageType, $messageText)
-            ->withCookie(cookie('jwt', $token, JWTAuth::factory()->getTTL()));
+            ->withCookie(cookie('jwt', $token, JWTAuth::factory()->getTTL(), '/', null, false, false));
     }
 }
