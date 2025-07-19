@@ -42,4 +42,5 @@ Route::middleware('jwt.web')->group(function () {
     Route::resource('tasks', TaskController::class);
     Route::resource('projects',     ProjectController::class);
     Route::resource('invitation', InvitationController::class);
+    Route::get('/settings', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings');
 });
