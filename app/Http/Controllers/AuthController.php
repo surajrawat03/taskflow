@@ -104,6 +104,19 @@ class AuthController extends Controller
         return response()->json(auth()->user());
     }
 
+    public function forgotPassword(request $request)
+    {
+        return view('auth.forgot-password');
+    }
+
+    // public function createPassword(request $request)
+    // {
+    //     // dd($request);
+    //     // Mail::to('receiver@example.com')->send(new TestEmail($details));
+    //     // $emial = $request->email; 
+    //     return view('auth.create-new-password');
+    // }
+
     protected function respondWithToken($token) {
         return response()->json([
             'access_token' => $token,

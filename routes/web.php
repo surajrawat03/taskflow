@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\InvitationController;
+use App\Http\Controllers\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,11 @@ Route::get('/register', function () {
 })->name('register');
 
 Route::post('/register', [AuthController::class, 'register']);
+Route::get('/forgotPassword', [AuthController::class, 'forgotPassword'])->name('forgot-password');
+Route::post('/sendPasswordResetLink', [ResetPasswordController::class, 'sendResetLinkEmail'])->name('send-password-reset-link');
+Route::get('/passwordReset/{token}', [ResetPasswordController::class, 'passwordReset'])->name('password-reset');
+Route::post('/passwordReset/{token}', [ResetPasswordController::class, 'updatePassword'])->name('password-reset-post');
+Route::get('/createNewPassword', [AuthController::class, 'createPassword'])->name('create-new-password');
 Route::get('acceptInvitation/{id}/{email}', [InvitationController::class, 'accept'])->name('accept-invitation')->middleware('signed');
 Route::get('/test', [DashboardController::class, 'test'])->name('test');
 
