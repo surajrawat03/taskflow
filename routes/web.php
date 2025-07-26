@@ -7,6 +7,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\WelcomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,19 +20,17 @@ use App\Http\Controllers\ResetPasswordController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 Route::get('/login', function () {
     return view('auth.login');
-})->name('login');
+})->name('login')->middleware('guest');
 
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/register', function () {
     return view('auth.register');
-})->name('register');
+})->name('register')->middleware('guest');
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/forgotPassword', [AuthController::class, 'forgotPassword'])->name('forgot-password');
