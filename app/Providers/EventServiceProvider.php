@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Events\UserRegistered;
+use App\Events\InvitationAccepted;
 use App\Listeners\AcceptedInvitation;
 use App\Listeners\AddToProjectMember;
+use App\Listeners\SendInvitationAcceptedEmail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -24,6 +26,9 @@ class EventServiceProvider extends ServiceProvider
         UserRegistered::class => [
             AcceptedInvitation::class,
             AddToProjectMember::class
+        ],
+        InvitationAccepted::class => [
+            SendInvitationAcceptedEmail::class,
         ],
     ];
 

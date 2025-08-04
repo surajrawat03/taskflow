@@ -4,10 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\ProjectInvitation;
 use App\Models\Team;
+use App\Models\User;
+use App\Services\InvitationService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InvitationController extends Controller
 {
+    protected $invitationService;
+
+    public function __construct(InvitationService $invitationService)
+    {
+        $this->invitationService = $invitationService;
+    }
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -85,9 +95,12 @@ class InvitationController extends Controller
 	}
 
 	/**
-	 * accept inviation.
+	 * Accept invitation.
 	 *
 	 * @param \Illuminate\Http\Request $request
+	 * @param int $id
+	 * @param string $email
+	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	public function accept(Request $request, $id, $email)
 	{
@@ -95,9 +108,9 @@ class InvitationController extends Controller
 			abort(403, 'Link expired or invalid');
 		}
 
-		$projectInvitation = ProjectInvitation::findOrFail($request->id);
+		$projectInvitation = ProjectInvitation::findOrFail($id);
 
-		// Flash the invitation email to the session
-		return redirect()->route('register')->withInput(['email' => $projectInvitation->email, 'invitation_id' => $projectInvitation->id]);
+		// Use the service to handle invitation acceptance
+		return $this->invitationService->processInvitation($projectInvitation);
 	}
 }

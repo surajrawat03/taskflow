@@ -100,6 +100,7 @@
                         <select id="project_id" 
                                 wire:model.defer="project_id"
                                 class="w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 focus:border-indigo-500 focus:ring-indigo-500">
+                            <option value="">Please Select Project</option>
                             @foreach ($projects as $project)
                                 <option value="{{$project->id}}">{{$project->name}}</option>
                             @endforeach

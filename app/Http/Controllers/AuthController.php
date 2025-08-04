@@ -4,14 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Events\UserRegistered;
 use App\Models\ProjectInvitation;
+use App\Services\InvitationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    protected $invitationService;
+
+    public function __construct(InvitationService $invitationService)
+    {
+        $this->invitationService = $invitationService;
+    }
+
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -50,6 +59,14 @@ class AuthController extends Controller
             ]);
         }
 
+        // Handle invitation acceptance after registration
+        $invitationRedirect = $this->invitationService->handlePostRegistrationInvitation($user);
+        if ($invitationRedirect) {
+            return $invitationRedirect->withCookie(
+                cookie('jwt', $token, JWTAuth::factory()->getTTL(), '/', null, false, false)
+            );
+        }
+
         return redirect()->route('dashboard')->withCookie(
             cookie('jwt', $token, JWTAuth::factory()->getTTL(), '/', null, false, false)
         );
@@ -68,6 +85,8 @@ class AuthController extends Controller
             }
             return redirect()->route('login')->withErrors(['error' => 'Unauthorized']);
         }
+
+        $user = Auth::user();
 
         if ($request->expectsJson()) {
             return response()->json([
@@ -109,19 +128,11 @@ class AuthController extends Controller
         return view('auth.forgot-password');
     }
 
-    // public function createPassword(request $request)
-    // {
-    //     // dd($request);
-    //     // Mail::to('receiver@example.com')->send(new TestEmail($details));
-    //     // $emial = $request->email; 
-    //     return view('auth.create-new-password');
-    // }
-
     protected function respondWithToken($token) {
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60 // Token lifetime in seconds
+            'expires_in' => JWTAuth::factory()->getTTL() * 60,
         ]);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\ProjectInvitation;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Validation\Rule;
